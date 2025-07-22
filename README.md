@@ -2,7 +2,7 @@
 > 调用 google gemini 示例
 
 ## gemini
-> 谷歌退出的 AI 只能模型
+> 谷歌推出的 AI 只能模型
 * <a href="https://deepmind.google/models/gemini/" target="_blank">Gemini官网</a>
 * <a href="https://gemini.google.com/app" target="_blank">Gemini Chat</a>
 * <a href="https://ai.google.dev/gemini-api/docs?hl=zh-cn" target="_blank">Gemini开发者文档</a>
