@@ -69,6 +69,55 @@ export GEMINI_API_KEY="your-api-key"
 1. 传递内嵌 PDF 数据
 2. 使用 File API 上传 PDF
 
+### 图片理解
+1. 传递内嵌图片数据
+2. 使用 File API 上传图片
+
+### 视频理解
+1. YouTuBe
+
 ### 代码执行
 1. 生成代码, 并执行代码
 2. 在对话中使用代码执行
+
+```go
+func main() {
+
+	// 文本生成
+	text.TexGen()
+	text.TexGenThinking()
+	text.TexGenCli()
+	text.TexGenDefaultConfig()
+	text.TexGenMultiModal()
+	text.TexGenStream()
+	text.TexMultipleRoundsOfDialogue()
+	text.TexGenStreamMultipleRoundsOfDialogue()
+
+	// 图片生成
+	photo.PhoGen()
+	photo.PhoEdit()
+	photo.ImaGen40GeneratePreview0606()
+
+	// 生成视频
+	voe3.VeoGen()
+	voe3.ImageGenVideo()
+
+	// 结构化输出
+	format.FormatToJson()
+
+	// 代码执行
+	coding.EnableCodingExec()
+	coding.DialogCodingExec()
+
+	// 文档理解
+	docs.InnerDoc()
+	docs.UploadFileApi()
+
+	// 图片理解
+	photo.PhoInnerRead()
+	photo.PhoFileApi()
+
+	// 视频理解
+	video.YouTuBe()
+}
+```

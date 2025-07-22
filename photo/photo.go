@@ -9,6 +9,8 @@ import (
 	"github.com/mazezen/gemini/client"
 	"github.com/mazezen/gemini/model"
 	"google.golang.org/genai"
+	"io"
+	"net/http"
 	"os"
 )
 
@@ -112,4 +114,59 @@ func ImaGen40GeneratePreview0606() {
 		fName := fmt.Sprintf("images/imgen-%d.png", n)
 		_ = os.WriteFile(fName, image.Image.ImageBytes, 0644)
 	}
+}
+
+// PhoInnerRead 传递内嵌图片数据
+func PhoInnerRead() {
+	ctx := context.Background()
+	c := client.NewClient(ctx, os.Getenv("GEMINI_API_KEY"))
+
+	imageResp, _ := http.Get("https://goo.gle/instrument-img")
+	imageBytes, _ := io.ReadAll(imageResp.Body)
+
+	parts := []*genai.Part{
+		genai.NewPartFromBytes(imageBytes, "image/jpeg"),
+		genai.NewPartFromText("Caption this image."),
+	}
+
+	contents := []*genai.Content{
+		genai.NewContentFromParts(parts, genai.RoleUser),
+	}
+
+	result, _ := c.Models.GenerateContent(
+		ctx,
+		model.Gemini25Flash,
+		contents,
+		nil,
+	)
+
+	fmt.Println(result.Text())
+
+}
+
+// PhoFileApi 使用 File API 上传图片
+func PhoFileApi() {
+	ctx := context.Background()
+	c := client.NewClient(ctx, os.Getenv("GEMINI_API_KEY"))
+
+	uploadFile, _ := c.Files.UploadFromPath(ctx, "images/panda.png", nil)
+
+	parts := []*genai.Part{
+		genai.NewPartFromText("Caption this image."),
+		genai.NewPartFromURI(uploadFile.URI, uploadFile.MIMEType),
+	}
+
+	contents := []*genai.Content{
+		genai.NewContentFromParts(parts, genai.RoleUser),
+	}
+
+	result, _ := c.Models.GenerateContent(
+		ctx,
+		model.Gemini25Flash,
+		contents,
+		nil,
+	)
+
+	fmt.Println(result.Text())
+
 }
